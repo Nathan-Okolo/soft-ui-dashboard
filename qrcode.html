@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>QR Code Generator in JavaScript | CodingNepal</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="qr-code">
+            <img src="" alt="QR code">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const wrapper = document.querySelector(".wrapper"),
+                qrImg = wrapper.querySelector(".qr-code img");
+
+            // Predefined URL or text to generate QR code
+            const qrValue = "https://example.com";
+
+            // Generate QR code
+            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrValue}`;
+
+            // Show QR code once loaded
+            qrImg.addEventListener("load", () => {
+                wrapper.classList.add("active");
+            });
+        });
+    </script>
+</body>
+
+
+</html>

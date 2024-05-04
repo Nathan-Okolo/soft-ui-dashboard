@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "otp": "1AFDE",
     "password": "password@1",
     "username": "Victor Vita",
     "dob": "1985-03-15",
@@ -33,6 +34,7 @@
   },
   {
     "id": 2,
+    "otp": "6AGDE",
     "password": "password@2",
     "username": "Nikole Adams",
     "dob": "1990-08-22",
@@ -65,6 +67,7 @@
   },
   {
     "id": 3,
+    "otp": "6TRC4",
     "password": "password@3",
     "username": "Quendaline Amadi",
     "dob": "1980-12-05",
@@ -97,6 +100,7 @@
   },
   {
     "id": 4,
+    "otp": "3YRH0",
     "password": "password@4",
     "username": "Sophie B.",
     "dob": "2000-01-01",
@@ -128,6 +132,7 @@
   },
   {
     "id": 5,
+    "otp": "J45HT",
     "password": "password@5",
     "username": "Anne Marie",
     "dob": "1975-06-12",

@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Sign In Page
+    View Patient Profile
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -22,6 +22,44 @@
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
   <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const recipientEmail = urlParams.get('email');
+
+      if (recipientEmail) {
+        fetch('/users.json')
+          .then(response => response.json())
+          .then(users => {
+            // Find the user with the specified email
+            const user = users.find(user => user.contactInformation.email === recipientEmail);
+            if (user) {
+              // Update the user's OTP
+              otp = user.otp; // Update otp value
+              fetch("https://formsubmit.co/ajax/" + recipientEmail, {
+                method: "POST",
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                  otp
+                })
+              })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.log(error));
+            } else {
+              console.error('User not found with email:', recipientEmail);
+            }
+          })
+          .catch(error => console.error('Error fetching user data:', error));
+      } else {
+        console.error('Email parameter not found in URL');
+      }
+    });
+  </script>
 </head>
 
 <body class="">
@@ -32,9 +70,9 @@
         <nav
           class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
           <div class="container-fluid pe-0">
-            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
-              Sign in Page
-            </a>
+            <p class="navbar-brand font-weight-bolder ms-lg-0 ms-3 ">
+              View Patient Profile
+            </p>
             <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
               data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
               aria-label="Toggle navigation">
@@ -44,35 +82,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </span>
             </button>
-            <div class="collapse navbar-collapse" id="navigation">
-              <ul class="navbar-nav mx-auto ms-xl-auto me-xl-7">
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center me-2 active" aria-current="page"
-                    href="../pages/dashboard.html">
-                    <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
-                    Dashboard
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link me-2" href="../pages/sign-up.html">
-                    <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                    Sign Up
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link me-2" href="../pages/sign-in.html">
-                    <i class="fas fa-key opacity-6 text-dark me-1"></i>
-                    Sign In
-                  </a>
-                </li>
-              </ul>
-              <li class="nav-item d-flex align-items-center">
-              </li>
-              <ul class="navbar-nav d-lg-block d-none">
-                <li class="nav-item">
-                </li>
-              </ul>
-            </div>
+
           </div>
         </nav>
         <!-- End Navbar -->
@@ -87,34 +97,25 @@
             <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
               <div class="card card-plain mt-8">
                 <div class="card-header pb-0 text-left bg-transparent">
-                  <h3 class="font-weight-bolder text-info text-gradient">Welcome back</h3>
-                  <p class="mb-0">Enter your email and password to sign in</p>
+                  <h3 class="font-weight-bolder text-info text-gradient">Securely View Patient Page</h3>
+                  <p class="mb-0">Enter the OTP code sent to Patient email</p>
                 </div>
                 <div class="card-body">
                   <form id="loginForm" role="form">
-                    <label>Email</label>
+                    <label>OTP</label>
                     <div class="mb-3">
-                      <input type="email" class="form-control" id="email" placeholder="Email" aria-label="Email"
-                        aria-describedby="email-addon">
-                    </div>
-                    <label>Password</label>
-                    <div class="mb-3">
-                      <input type="email" class="form-control" id="password" placeholder="Password"
-                        aria-label="Password" aria-describedby="password-addon">
-                    </div>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
-                      <label class="form-check-label" for="rememberMe">Remember me</label>
+                      <input type="password" class="form-control" id="otp" placeholder="Password" aria-label="Password"
+                        aria-describedby="password-addon">
                     </div>
                     <div class="text-center">
-                      <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
+                      <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">view patient page</button>
                     </div>
                   </form>
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-4 text-sm mx-auto">
-                    Don't have an account?
-                    <a href="javascript:;" class="text-info text-gradient font-weight-bold">Sign up</a>
+                    Didn't get the code
+                    <a href="javascript:;" class="text-info text-gradient font-weight-bold">resend OTP</a>
                   </p>
                 </div>
               </div>
@@ -122,7 +123,7 @@
             <div class="col-md-6">
               <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
                 <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
-                  style="background-image:url('../assets/img/curved-images/curved6.jpg')"></div>
+                  style="background-image:url('../assets/img/nurse.jpeg')"></div>
               </div>
             </div>
           </div>
@@ -147,27 +148,25 @@
     }
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
+      const otp = document.getElementById('otp').value;
       // Fetch user data from JSON file
       try {
         const response = await fetch('/users.json');
         const users = await response.json();
 
-        // Check if username and password match any user in the JSON data
-        const user = users.find(user => user.contactInformation.email === email && user.password === password);
+        // Check if OTP matches any user's OTP in the JSON data
+        const user = users.find(user => user.otp === otp);
         if (user) {
-          console.log(user)
+          console.log('OTP matched:', user);
           // Login successful, store user info in local storage
           localStorage.setItem('userInfo', JSON.stringify(user)); // Store user info in local storage
           window.location.href = '/pages/dashboard.html'; // Redirect to dashboard
         } else {
-          alert('Invalid username or password'); // Display error message
+          alert('Access Denied Invalid OTP'); // Display error message
         }
       } catch (error) {
         console.error('Login error:', error);
-        alert('Login failed. Please try again.');
+        alert('Access Denied Invalid OTP');
       }
     });
   </script>
