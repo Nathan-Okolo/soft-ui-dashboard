@@ -1226,7 +1226,7 @@
         const email = user.contactInformation.email
 
         // Predefined URL or text to generate QR code
-        const qrValue = `http://127.0.0.1:5500/pages/sign-in.html?email=${email}`;
+        const qrValue = `https://soft-ui-dashboard-gamma.vercel.app/pages/sign-in.html?email=${email}`;
 
         // Generate QR code
         qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrValue}`;
