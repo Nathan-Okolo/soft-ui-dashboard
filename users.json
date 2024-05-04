@@ -162,5 +162,38 @@
       "weight": "65 kg",
       "bloodPressure": "125/85 mmHg"
     }
+  },
+  {
+  "id": 6,
+  "otp": "F82RJ",
+  "password": "password@6",
+  "username": "John Doe",
+  "dob": "1980-10-25",
+  "profileImage": "../assets/img/pic.jpeg",
+  "gender": "Male",
+  "contactInformation": {
+    "phone": "+5511987654322",
+    "email": "john.doe@yopmail.com",
+    "address": "123 Main Street, Anytown, USA"
+  },
+  "medicalInfo": {
+    "bloodType": "O+",
+    "allergies": "None",
+    "medications": {
+      "name": "Aspirin",
+      "dosage": "81mg",
+      "frequency": "Once daily"
+    },
+    "medicalHistory": "No significant medical history"
+  },
+  "emergencyContacts": {
+    "name": "Jane Doe (Spouse)",
+    "phoneNumber": "+551123456780"
+  },
+  "vitals": {
+    "height": "180 cm",
+    "weight": "75 kg",
+    "bloodPressure": "120/80 mmHg"
   }
+}
 ]
