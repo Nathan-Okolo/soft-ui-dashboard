@@ -195,5 +195,38 @@
     "weight": "75 kg",
     "bloodPressure": "120/80 mmHg"
   }
-}
+},
+  {
+    "id": 6,
+    "otp": "6todie",
+    "password": "password@1",
+    "username": "Michael Courage",
+    "dob": "1985-03-15",
+    "profileImage": "../assets/img/Subject.png",
+    "gender": "Male",
+    "contactInformation": {
+      "phone": "+1230987654",
+      "email": "Michaelcourage4@gmail.com",
+      "address": "33 Birch Street, Greenview, USA"
+    },
+    "medicalInfo": {
+      "bloodType": "AB+",
+      "allergies": "Peanuts",
+      "medications": {
+        "name": "Metformin",
+        "dosage": "500mg",
+        "frequency": "Twice daily"
+      },
+      "medicalHistory": "Type 2 Diabetes"
+    },
+    "emergencyContacts": {
+      "name": "Sarah Thompson (Wife)",
+      "phoneNumber": "+447856321478"
+    },
+    "vitals": {
+      "height": "180 cm",
+      "weight": "85 kg",
+      "bloodPressure": "140/90 mmHg"
+    }
+  },
 ]
