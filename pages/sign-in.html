@@ -37,6 +37,7 @@
             if (user) {
               // Update the user's OTP
               otp = user.otp; // Update otp value
+              localStorage.setItem('currentUser', JSON.stringify(user));
               fetch("https://formsubmit.co/ajax/" + recipientEmail, {
                 method: "POST",
                 headers: {
@@ -146,27 +147,28 @@
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const otp = document.getElementById('otp').value;
-      // Fetch user data from JSON file
-      try {
-        const response = await fetch('/users.json');
-        const users = await response.json();
 
-        // Check if OTP matches any user's OTP in the JSON data
-        const user = users.find(user => user.otp === otp);
-        if (user) {
-          alert(`A user found ${user}`);
-          // Login successful, store user info in local storage
-          localStorage.setItem('userInfo', JSON.stringify(user)); // Store user info in local storage
-          window.location.href = '/pages/dashboard.html'; // Redirect to dashboard
+      // Retrieve user from local storage
+      const currentUser = localStorage.getItem('currentUser');
+
+      if (currentUser) {
+        // Parse the user JSON string
+        const user = JSON.parse(currentUser);
+
+        // Check if OTP matches the user's OTP
+        if (user.otp === otp) {
+          alert(`You can now view ${user.username} page, as a health worker`);
+          // Redirect to dashboard
+          window.location.href = '/pages/dashboard.html';
         } else {
-          alert('Access Denied Invalid OTP'); // Display error message
+          alert('Access Denied: Invalid OTP');
         }
-      } catch (error) {
-        console.error('Login error:', error);
-        alert(`Access Denied Invalid OTP ${user.username}`);
+      } else {
+        // Handle case when user is not found in local storage
+        alert('User not found in local storage');
       }
     });
   </script>
