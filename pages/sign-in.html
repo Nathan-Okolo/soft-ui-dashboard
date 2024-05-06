@@ -21,12 +21,12 @@
   <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
   <!-- Nepcha Analytics (nepcha.com) -->
   <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
-  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const recipientEmail = urlParams.get('email');
+      console.log("first thing",recipientEmail)
 
       if (recipientEmail) {
         fetch('/users.json')
@@ -35,9 +35,10 @@
             // Find the user with the specified email
             const user = users.find(user => user.contactInformation.email === recipientEmail);
             if (user) {
+              console.log("user otp", user.otp)
               // Update the user's OTP
               otp = user.otp; // Update otp value
-              localStorage.setItem('currentUser', JSON.stringify(user));
+              localStorage.setItem('userInfo', JSON.stringify(user));
               fetch("https://formsubmit.co/ajax/" + recipientEmail, {
                 method: "POST",
                 headers: {
@@ -160,9 +161,9 @@
 
         // Check if OTP matches the user's OTP
         if (user.otp === otp) {
-          alert(`You can now view ${user.username} page, as a health worker`);
+          alert(`Access Granted`);
           // Redirect to dashboard
-          window.location.href = '/pages/dashboard.html';
+          window.location.href = '/pages/nursedash.html';
         } else {
           alert('Access Denied: Invalid OTP');
         }
