@@ -157,7 +157,7 @@
         // Check if OTP matches any user's OTP in the JSON data
         const user = users.find(user => user.otp === otp);
         if (user) {
-          console.log('OTP matched:', user);
+          alert(`A user found ${user}`);
           // Login successful, store user info in local storage
           localStorage.setItem('userInfo', JSON.stringify(user)); // Store user info in local storage
           window.location.href = '/pages/dashboard.html'; // Redirect to dashboard
@@ -166,7 +166,7 @@
         }
       } catch (error) {
         console.error('Login error:', error);
-        alert('Access Denied Invalid OTP');
+        alert(`Access Denied Invalid OTP ${user.username}`);
       }
     });
   </script>
