@@ -26,7 +26,7 @@
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
       const recipientEmail = urlParams.get('email');
-      console.log("first thing",recipientEmail)
+      console.log("first thing", recipientEmail)
 
       if (recipientEmail) {
         fetch('/users.json')
@@ -116,8 +116,8 @@
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-4 text-sm mx-auto">
-                    Didn't get the code
-                    <a href="javascript:;" class="text-info text-gradient font-weight-bold">resend OTP</a>
+                    New Patient?
+                    <a href="/pages/sign-up.html" class="text-info text-gradient font-weight-bold">Sign Up</a>
                   </p>
                 </div>
               </div>

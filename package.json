@@ -10,7 +10,8 @@
     "open-app": "gulp open-app",
     "start": "npm run open-app",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "gulp-watch"
+    "watch": "gulp-watch",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -41,10 +42,16 @@
     "gulp-autoprefixer": "^7.0.1",
     "gulp-clean": "^0.4.0",
     "gulp-install": "^1.1.0",
+    "gulp-open": "^3.0.1",
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-open": "^3.0.1",
     "sass": "^1.49.9"
   },
-  "homepage": "http://creative-tim.com/product/soft-ui-dashboard"
+  "homepage": "http://creative-tim.com/product/soft-ui-dashboard",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
 }
