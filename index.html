@@ -86,7 +86,7 @@
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-4 text-sm mx-auto">
                     Don't have an account? Contact an Admin to
-                    <a  class="text-info text-gradient font-weight-bold">Sign up</a>
+                    <a class="text-info text-gradient font-weight-bold">Sign up</a>
                   </p>
                 </div>
               </div>
@@ -123,24 +123,38 @@
       const password = document.getElementById('password').value;
 
       // Fetch user data from JSON file
-      try {
-        const response = await fetch('/users.json');
-        const users = await response.json();
+      document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-        // Check if username and password match any user in the JSON data
-        const user = users.find(user => user.contactInformation.email === email && user.password === password);
-        if (user) {
-          console.log(user)
-          // Login successful, store user info in local storage
-          localStorage.setItem('userInfo', JSON.stringify(user)); // Store user info in local storage
-          window.location.href = '/pages/dashboard.html'; // Redirect to dashboard
-        } else {
-          alert('Invalid username or password'); // Display error message
+        // Make a POST request to the login endpoint
+        try {
+          const response = await fetch('https://axislink-backend-9k2y.onrender.com/axislink/api/v1/auth/patient-login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }), // Send email and password in the request body
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            const user = result.data.user;
+
+            console.log(user);
+            // Login successful, store user info in local storage
+            localStorage.setItem('userInfo', JSON.stringify(user)); // Store user info in local storage
+            window.location.href = '/pages/dashboard.html'; // Redirect to dashboard
+          } else {
+            alert(result.message || 'Invalid username or password'); // Display error message
+          }
+        } catch (error) {
+          console.error('Login error:', error);
+          alert('Login failed. Please try again.');
         }
-      } catch (error) {
-        console.error('Login error:', error);
-        alert('Login failed. Please try again.');
-      }
+      });
     });
   </script>
   <!-- Github buttons -->
