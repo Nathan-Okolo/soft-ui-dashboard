@@ -1,0 +1,26 @@
+[
+    {
+      "healthcareProvider": "Soft UI XD Version",
+      "reason": "Routine Checkup",
+      "diagnosis": "$14,000",
+      "completion": "60%"
+    },
+    {
+      "healthcareProvider": "Add Progress Track",
+      "reason": "Follow-up",
+      "diagnosis": "$3,000",
+      "completion": "10%"
+    },
+    {
+      "healthcareProvider": "Fix Platform Errors",
+      "reason": "System Issue",
+      "diagnosis": "Not set",
+      "completion": "100%"
+    },
+    {
+      "healthcareProvider": "Launch our Mobile App",
+      "reason": "App Deployment",
+      "diagnosis": "$20,500",
+      "completion": "100%"
+    }
+  ]
