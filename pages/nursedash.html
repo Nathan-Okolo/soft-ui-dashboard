@@ -340,25 +340,22 @@
                   <script>
                     document.addEventListener('DOMContentLoaded', async () => {
                       try {
-                        // Retrieve user info from localStorage
                         const userInfo = localStorage.getItem('userInfo');
-
                         if (!userInfo) {
                           console.error('User info not found in localStorage');
-                          window.location.href = '/index.html'; // Redirect to login page if user info is missing
+                          window.location.href = '/index.html';
                           return;
                         }
 
                         const user = JSON.parse(userInfo);
-                        const email = user.contactInformation.email; // Extract email from user info
+                        const email = user.contactInformation.email;
 
-                        // Make a POST request to the endpoint
                         const response = await fetch('https://axislink-backend-9k2y.onrender.com/axislink/api/v1/post/view-appointment', {
                           method: 'POST',
                           headers: {
                             'Content-Type': 'application/json',
                           },
-                          body: JSON.stringify({ email }), // Pass email in the request body
+                          body: JSON.stringify({ email }),
                         });
 
                         const result = await response.json();
@@ -368,13 +365,15 @@
                           return;
                         }
 
-                        const appointments = result.data.appointments; // Extract appointments from the response
+                        const appointments = result.data.appointments;
+                        console.log('Appointments:', appointments);
 
-                        // Get the table body element
                         const tableBody = document.getElementById('appointmentsTable');
+                        console.log('Table body:', tableBody);
 
-                        // Populate the table with data
                         appointments.forEach((appointment) => {
+                          console.log('Creating row for appointment:', appointment);
+
                           const row = document.createElement('tr');
 
                           row.innerHTML = `
@@ -394,74 +393,49 @@
                             <td class="align-middle text-center">
                               <span class="text-xs font-weight-bold">${appointment.status ? 'Completed' : 'Pending'}</span>
                             </td>
+                            <td class="align-middle text-center">
+                              <button class="btn btn-sm btn-success mark-done-btn" data-id="${appointment._id}" ${appointment.status ? 'disabled' : ''}>
+                                Mark Done
+                              </button>
+                            </td>
                           `;
 
                           tableBody.appendChild(row);
                         });
-                      } catch (error) {
-                        console.error('Error fetching appointments:', error);
-                      }
-                    });
-                  </script>
-                  <script>
-                    appointments.forEach((appointment) => {
-                      const row = document.createElement('tr');
 
-                      row.innerHTML = `
-                        <td class="text-left">
-                          <div class="d-flex px-2 py-1">
-                            <div class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm">${appointment.provider}</h6>
-                            </div>
-                          </div>
-                        </td>
-                        <td class="text-left">
-                          <span class="text-xs font-weight-bold">${appointment.reason}</span>
-                        </td>
-                        <td class="align-middle text-center">
-                          <span class="text-xs font-weight-bold">${new Date(appointment.date).toLocaleDateString()}</span>
-                        </td>
-                        <td class="align-middle text-center">
-                          <span class="text-xs font-weight-bold">${appointment.status ? 'Completed' : 'Pending'}</span>
-                        </td>
-                        <td class="align-middle text-center">
-                          <button class="btn btn-sm btn-success mark-done-btn" data-id="${appointment._id}" ${appointment.status ? 'disabled' : ''}>
-                            Mark Done
-                          </button>
-                        </td>
-                      `;
+                        document.querySelectorAll('.mark-done-btn').forEach((button) => {
 
-                      tableBody.appendChild(row);
-                    });
+                          button.addEventListener('click', async (e) => {
+                            const appointmentId = e.target.getAttribute('data-id');
+                            try {
+                              const response = await fetch('https://axislink-backend-9k2y.onrender.com/axislink/api/v1/post/update-appointment', {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  appointmentId,
+                                  status: true,
+                                }),
+                              });
 
-                    // Add event listeners to "Mark Done" buttons
-                    document.querySelectorAll('.mark-done-btn').forEach((button) => {
-                      button.addEventListener('click', async (e) => {
-                        const appointmentId = e.target.getAttribute('data-id');
-
-                        try {
-                          // Call the endpoint to mark the appointment as done
-                          const response = await fetch(`https://axislink-backend-9k2y.onrender.com/axislink/api/v1/post/mark-appointment-done/${appointmentId}`, {
-                            method: 'PATCH',
-                            headers: {
-                              'Content-Type': 'application/json',
-                            },
+                              const result = await response.json();
+                              console.log('Result:', result);
+                              if (result.success) {
+                                alert('Appointment marked as done!');
+                                window.location.reload();
+                              } else {
+                                alert(result.message || 'Failed to mark appointment as done.');
+                              }
+                            } catch (error) {
+                              console.error('Error marking appointment as done:', error);
+                              alert('An error occurred. Please try again.');
+                            }
                           });
-
-                          const result = await response.json();
-
-                          if (result.success) {
-                            alert('Appointment marked as done!');
-                            // Refresh the page to update the table
-                            window.location.reload();
-                          } else {
-                            alert(result.message || 'Failed to mark appointment as done.');
-                          }
-                        } catch (error) {
-                          console.error('Error marking appointment as done:', error);
-                          alert('An error occurred. Please try again.');
-                        }
-                      });
+                        });
+                      } catch (error) {
+                        console.error('Error:', error);
+                      }
                     });
                   </script>
                 </div>
