@@ -225,7 +225,7 @@
         if (result.success) {
           alert('Access Granted');
           // Store user info in local storage
-          localStorage.setItem('userInfo', JSON.stringify(result.data));
+          localStorage.setItem('userInfo', JSON.stringify(result.data.user));
           // Redirect to the dashboard
           window.location.href = '/pages/nursedash.html';
         } else {
